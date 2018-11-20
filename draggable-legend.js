@@ -11,13 +11,21 @@
  * if will keep the same distance to the right edge even after chart resize or
  * when exporting to a different size.
  */
-(function (H) {
+// 'use strict';
+(function(factory) {
+  if (typeof module === 'object' && module.exports) {
+    module.exports = factory;
+  } else {
+    factory(Highcharts);
+  }
+}(function(Highcharts) {
+  (function (H) {
     var addEvent = H.addEvent;
 
     H.wrap(H.Chart.prototype, 'init', function (proceed) {
         proceed.apply(this, Array.prototype.slice.call(arguments, 1));
 
-        var chart = this, 
+        var chart = this,
             legend = chart.legend,
             title = legend.title,
             options = legend.options,
@@ -28,7 +36,6 @@
             optionsY,
             currentX,
             currentY;
-        
 
         function pointerDown(e) {
             e = chart.pointer.normalize(e);
@@ -40,7 +47,7 @@
             currentY = legend.group.attr('translateY');
             isDragging = true;
         }
-        
+
         function pointerMove(e) {
             if (isDragging) {
                 e = chart.pointer.normalize(e);
@@ -73,17 +80,16 @@
 
             }
         }
-        
+
         function pointerUp() {
             isDragging = false;
         }
 
-        if (options.draggable && title) {
-
-            title.css({ cursor: 'move' });
+        if (options.draggable) {
+            legend.box.css({ cursor: 'move' });
 
             // Mouse events
-            addEvent(title.element, 'mousedown', pointerDown);
+            addEvent(legend.box.element, 'mousedown', pointerDown);
             addEvent(chart.container, 'mousemove', pointerMove);
             addEvent(document, 'mouseup', pointerUp);
 
@@ -94,4 +100,5 @@
 
         }
     });
-}(Highcharts));
+  }(Highcharts));
+}));
