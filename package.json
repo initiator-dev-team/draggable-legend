@@ -9,7 +9,7 @@
     "main": "draggable-legend.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/highcharts/draggable-legend.git"
+        "url": "git+https://github.com/initiator-dev-team/draggable-legend.git"
     },
     "keywords": [
         "draggable",
